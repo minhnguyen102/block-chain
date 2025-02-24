@@ -1,0 +1,135 @@
+doctype html
+html
+  head
+    title Demo Blockchain
+    meta(charset="UTF-8")
+    link(rel='stylesheet', href='/css/style.css') 
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .block {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      .pending {
+        background: #fff8dc;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .pending {
+        background: #f9f9f9;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      .pending h3 {
+        margin-top: 0;
+      }
+
+      .pending ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .pending li {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #fff;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .pending li .field {
+        flex: 1 1 45%; /* Mỗi trường chiếm khoảng 45% chiều rộng, tự động xuống dòng nếu không đủ chỗ */
+        margin: 5px;
+        font-size: 14px;
+      }
+
+      .pending li .field span.label {
+        font-weight: bold;
+        color: #333;
+      }
+
+  
+
+  body
+    include ./partials/header.pug
+    .container
+      h1 Demo Blockchain
+
+      form(action="/block/add-transaction" method="post")
+        div
+          label(for="fromAddress") From Address:
+          input(type="text" name="fromAddress" id="fromAddress" placeholder="Nhập địa chỉ gửi" required autocomplete="off")
+        div
+          label(for="toAddress") To Address:
+          input(type="text" name="toAddress" id="toAddress" placeholder="Nhập địa chỉ nhận" required autocomplete="off")
+        div
+          label(for="amount") Amount:
+          input(type="number" name="amount" id="amount" placeholder="Nhập số tiền" step="any" required autocomplete="off")
+        div
+          label(for="message") Message:
+          input(type="text" name="message" id="message" placeholder="Nhập thông điệp" required autocomplete="off")
+        button(type="submit") Thêm Transaction
+
+
+      //- Hiển thị số transaction pending
+      .pending
+        h3 Transaction Pending: #{pendingCount}
+        if pendingCount > 0
+          ul
+            each tx in pendingTransactions
+              li
+              .field
+                span.label From: 
+                | #{tx.fromAddress}
+              .field
+                span.label To: 
+                | #{tx.toAddress}
+              .field
+                span.label Amount: 
+                | #{tx.amount}
+              .field
+                span.label Message: 
+                | #{tx.message}
+              //- p From: #{tx.fromAddress}
+              //- p To: #{tx.toAddress}
+              //- p Amount: #{tx.amount}
+              //- p Message: #{tx.message}
+        else
+          p Hiện không có transaction pending.
+
+      //- Nút tạo block thủ công (nếu muốn tạo block trước khi đủ 5 transaction)
+      if pendingCount > 0
+        a(href="/create-block") 
+          button(type="button") Tạo Block (Thủ công)
+
+      hr
+
+      //- Hiển thị chuỗi blockchain
+      h2 Blockchain
+      each block in blockchain.chain
+        .block
+          h3 Block #{block.index}
+          p Timestamp: #{block.timestamp}
+          p Previous Hash: #{block.previousHash}
+          p Hash: #{block.hash}
+          if block.transactions.length > 0
+            h4 Transactions:
+            ul
+              each tx in block.transactions
+                li= tx.message
+          else
+            p (Không có transaction)

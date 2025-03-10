@@ -1,0 +1,72 @@
+/* Định dạng chung */
+body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .container {
+    max-width: 900px;
+  }
+  
+  /* Tiêu đề */
+  h1 {
+    color: #1E40AF;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  /* Form thêm transaction */
+  form input {
+    border: 2px solid #CBD5E1;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  form input:focus {
+    border-color: #1E40AF;
+    outline: none;
+  }
+  
+  form button {
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  form button:hover {
+    background-color: #1E3A8A;
+  }
+  
+  /* Transaction Pending */
+  .bg-yellow-100 {
+    border-left: 6px solid #D97706;
+    padding: 15px;
+  }
+  
+  p.cursor-pointer {
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  p.cursor-pointer:hover {
+    color: #B45309;
+  }
+  
+  /* Blockchain Blocks */
+  .bg-white {
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .bg-white:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  h3.text-xl {
+    color: #1E40AF;
+  }
+  
+  /* Transaction details */
+  .bg-gray-100 {
+    border-left: 4px solid #6B7280;
+    padding: 12px;
+  }
+  

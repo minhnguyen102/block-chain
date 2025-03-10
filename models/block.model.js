@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Schema của Transaction với các trường mở rộng
+// Schema Transaction
 const transactionSchema = new Schema({
   fromAddress: { type: String, required: true },
   toAddress: { type: String, required: true },
@@ -9,16 +9,14 @@ const transactionSchema = new Schema({
   message: { type: String, required: true }
 }, { timestamps: true });
 
-// Schema của Block
+// Schema Block
 const blockSchema = new Schema({
   index: { type: Number, required: true },
   previousHash: { type: String, required: true },
   timestamp: { type: Number, required: true },
   hash: { type: String, required: true },
-  transactions: [transactionSchema]  // nhúng danh sách các transaction
+  transactions: [transactionSchema]
 }, { timestamps: true });
 
-// Model cho Block (transaction được nhúng nên không cần model riêng)
-const Block = mongoose.model('Block', blockSchema);
-
-module.exports = { Block };
+const Block = mongoose.model('Block', blockSchema,"block-chain");
+module.exports = Block;

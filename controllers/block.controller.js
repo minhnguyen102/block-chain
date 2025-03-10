@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 
+
 class Block {
     constructor(index, previousHash, timestamp, transactions, hash) {
       this.index = index;
@@ -72,21 +73,19 @@ class Block {
   // Tạo đối tượng blockchain mới
 let myBlockchain = new Blockchain();
 module.exports.index = (req, res) => {
-    console.log(myBlockchain.pendingTransactions)
     res.render('block', { 
         blockchain: myBlockchain,
         pendingCount: myBlockchain.pendingTransactions.length,
         pendingTransactions : myBlockchain.pendingTransactions
     });
-    // res.render("block.pug")
 }
 
-module.exports.addTransaction = (req, res) => {
+module.exports.addTransaction = async (req, res) => {
     const { fromAddress, toAddress, amount, message } = req.body;
     if (message) {
         const tx = new Transaction(fromAddress, toAddress, amount, message);
         myBlockchain.addTransaction(tx);
     }
     res.redirect('back');
-
 }
+
